@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github.min.css">
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+	<script>hljs.highlightAll();</script>
+
+	<% if (page.mathjax) { %>
+		<script>
+            window.MathJax = {
+                tex: {
+                    inlineMath: [['$', '$'], ['\\(', '\\)']]
+                },
+                options: {
+                    lazyMargin: "200px",
+                },
+                loader: {load: ['ui/lazy']}
+
+            };
+        </script>
+        <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+        <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+	<% } %>
+
+	<%- css('css/style.css') %>
+	<title><%= config.title %></title>
+</head>
+
+<body>
+	<%- partial('_partial/header') %>
+	<div class="main">
+		<%- body %>
+	</div>
+</body>
+
+</html>

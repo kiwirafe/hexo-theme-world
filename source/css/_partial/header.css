@@ -1,0 +1,39 @@
+.nav {
+	overflow: hidden;
+	background-color: #f8f9fa;
+	border-bottom: 1px solid #ececec;
+}
+
+.inner {
+	min-width: 200px;
+	max-width: 980px;
+	margin: 0 auto;
+	padding: 0px 100px;
+}
+
+.nav a {
+	float: left;
+	color: #555555;
+	text-align: center;
+	padding: 14px 16px;
+	text-decoration: none;
+	font-size: 17px;
+}
+
+.nav a:hover {
+	color: #a7a7a7;
+}
+
+.nav .right {
+	float: right;
+}
+
+@media (max-width: 800px) {
+	.inner {
+		padding: 0px 20px;
+	}
+
+	.nav a {
+		padding: 14px 8px;
+	}
+}

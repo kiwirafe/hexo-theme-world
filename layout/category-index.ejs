@@ -1,0 +1,30 @@
+<div>
+	<div class="categories-wrap">
+		<% get_categories().forEach(function(category){ %>
+			<a href="<%= url_for_lang(page.lang, category.path) %>" class="btn" role="button">
+				<%= category.name %>
+			</a>
+		<% }) %>
+	</div>
+	
+	<% page.posts.forEach(function(category){ %>
+		<div class="posts-wrap" id="<%= category.name %>">
+			<h3 class="archive-tag">
+				<%= category.name %>
+			</h3>
+			<ul>
+				<% category.posts.forEach(function(post){ %>
+					<% if (post.lang == page.lang) { %>
+					<li>
+						<a class="post-title" href="<%- url_for(post.path) %>">
+							<%= post.title %>
+						</a>
+					</li>
+					<% } %>
+				<% }) %>
+			</ul>
+		</div>
+	<% }) %>
+</div>
+
+<%- partial('_partial/paginator') %>

@@ -1,0 +1,20 @@
+<div class="nav">
+	<div class="inner">
+		<a href="<% url_for('/') %>" target="_blank">
+			<%= config.title %>
+		</a>
+		<div class="right">
+			<% if (page.lang == 'en') { %>
+				<a href="/">Home</a>
+				<a href="/archives">Archive</a>
+				<a href="/categories">Category</a>
+				<a href="/zh/">中文站</a>
+			<% } else { %>
+				<a href="/zh/">首页</a>
+				<a href="/zh/archives">归档</a>
+				<a href="/zh/categories">分类</a>
+				<a href="/">English</a>
+			<% } %>
+		</div>
+	</div>
+</div>

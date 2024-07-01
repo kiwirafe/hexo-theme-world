@@ -1,0 +1,24 @@
+<div>
+	<% page.posts.forEach(function(post) { %>
+		<% if (post.lang == page.lang) { %>
+            <div class="post-item">
+                <p class="post-date">
+                    <%= date(post.date, "YYYY-MM-DD" ) %> 
+                    <% post.tags.forEach(function(tag){ %>
+                        <a href="<%= tag.href %>">
+                            #<%= tag.name %>
+                        </a>
+                    <% }) %>
+                </p>
+                <h2 class="post-title">
+                    <a href="<%- url_for(post.path) %>">
+                        <%= post.title %>
+                    </a>
+                </h2>
+                <hr class="post-hr">
+            </div>
+		<% } %>
+	<% }) %>
+</div>
+
+<%- partial('_partial/paginator') %>

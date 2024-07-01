@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github.min.css">
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+	<script>hljs.highlightAll();</script>
+
+	
+
+	
+<link rel="stylesheet" href="/css/style.css">
+
+	<title>Hexo</title>
+<meta name="generator" content="Hexo 7.2.0"></head>
+
+<body>
+	<div class="nav">
+	<div class="inner">
+		<a href="" target="_blank">
+			Hexo
+		</a>
+		<div class="right">
+			
+				<a href="/">Home</a>
+				<a href="/archives">Archive</a>
+				
+					<a href="/categories">Categories</a>
+				
+				
+				<a href="/zh/">中文站</a>
+			
+		</div>
+	</div>
+</div>
+	<div class="main">
+		<div class="post">
+	<h1>Longest Increasing Subsequence</h1>
+	<p>Recently I have encountered a problem - <a target="_blank" rel="noopener" href="https://leetcode.com/problems/longest-increasing-subsequence/">Longest Increasing Subsequence</a>(LIS). There’s an O(nlogn) solution, but after some searching I haven’t found a statisfying explaination. Hence in this blog I wonder if I could explain it clearly but also thoroughly.</p>
+<h2 id="1-Problem-Description"><a href="#1-Problem-Description" class="headerlink" title="1. Problem Description"></a>1. Problem Description</h2><p>Given an integer array <code>nums</code>, return <em>the length of the longest  <strong>strictly increasing subsequence</strong></em>.</p>
+<h3 id="Examples"><a href="#Examples" class="headerlink" title="Examples:"></a>Examples:</h3><p><strong>Example 1:</strong></p>
+<pre><code class="plaintext">Input: nums = [10,9,2,5,3,7,101,18]
+Output: 4
+Explanation: The longest increasing subsequence is [2,3,7,101], therefore the length is 4.
+</code></pre>
+<p><strong>Example 2:</strong></p>
+<pre><code class="plaintext">Input: nums = [0,1,0,3,2,3]
+Output: 4
+</code></pre>
+<p><strong>Example 3:</strong></p>
+<pre><code class="plaintext">Input: nums = [7,7,7,7,7,7,7]
+Output: 1
+</code></pre>
+<h2 id="2-O-nlogn-Solution"><a href="#2-O-nlogn-Solution" class="headerlink" title="2. O(nlogn) Solution"></a>2. O(nlogn) Solution</h2><h3 id="2-1-Patience-Game"><a href="#2-1-Patience-Game" class="headerlink" title="2.1 Patience Game"></a>2.1 Patience Game</h3><p>It may seem a bit odd, but we will begin the solution by learning a traditional card game - the Patience Game:<br>Deal cards c1, c2, …, cn into piles according to two rules:</p>
+<ul>
+<li>Can’t place a higher-valued card onto a lowered-valued card. </li>
+<li>Can form a new pile and put a card onto it.</li>
+</ul>
+<p>The goals is to have the minimal number of piles.</p>
+<p><img src="https://i.postimg.cc/Qtbc4r9p/Screenshot-2023-12-05-145138.jpg" alt="Example Image 1"></p>
+<p>Shown in the picture above, each pile is in descending order, since we can’t place a higher valued card onto a lowered value card. However, we can form a new pile and put a card onto it, which is why we have 5 different piles.</p>
+<h3 id="2-2-Patience-Sort"><a href="#2-2-Patience-Sort" class="headerlink" title="2.2 Patience Sort"></a>2.2 Patience Sort</h3><p><strong>So, how do we optimise this?</strong><br>The answer is to always place the card on the left-most pile that is valid. This algorithm is called Patience Sort.</p>
+<p><strong>How does this work?</strong><br>Patience Sort is a greedy algorithm, which means that it always aims for the locally optimal choice at each stage. </p>
+<p><img src="https://i.postimg.cc/x8QNSpH9/Screenshot-2023-12-05-150802.jpg" alt="Example Image 2"></p>
+<p>At any stage during greedy algorithm, top cards of the piles always increase from left to right. (Top card is the bottom-most card in a pile, such as 2, 4, 7, 8, Q in the image above). By placing it on the left-most pile that is valid, we have chosen the optimal choice at this stage.</p>
+<p>For example, imagine we have a card set that is <code>[10, 100, 5]</code><br>First, we place 10 of spades into a pile. Then, we make a second pile and place 100 of spades on it, since we can’t place the 100 on the 10.<br>At last, we encounter the 5 of hearts. Where do we place the 5 of hearts? On the first pile, with 10 of spades, or the second pile, with 100 of spades?</p>
+<p><img src="https://i.postimg.cc/Dz7N87TG/Screenshot-2023-12-05-151454.jpg" alt="Example Image 3"></p>
+<p>We should place 5 of hearts onto the first pile.<br>If we place it on the second pile, then we can only place 1-9 in the first pile, and 1-4 on the second one.<br>However, if we place it on the first pile, then we can place 1-4 on the first pile, and 1-99 on the second one. It is obvious that this option provides more ‘room’ for future cards, which is why it is the local optimal solution.</p>
+<h3 id="2-3-Patience-Sort-and-LIS"><a href="#2-3-Patience-Sort-and-LIS" class="headerlink" title="2.3 Patience Sort and LIS"></a>2.3 Patience Sort and LIS</h3><p>OK, so Patience Sort finds the minimal number of piles to play the Patience Game. But how does this link with Longest Increasing Subsequence(LIS)? Hence in this section we are going to prove that <strong>minimal number of piles &#x3D; length of LIS</strong> (the strong duality of the two).</p>
+<p><strong>Lemma 1: minimal number of piles &gt;&#x3D; length of LIS</strong><br>Proof: Assume we have an LIS: <code>c1 &lt; c2 &lt; ... &lt; cn</code>.<br>If we know a card c(i), where is card c(i+1)?<br>First, c(i+1) cannot be in the same pile as c(i), since all cards on top of c(i) must be smaller than c(i) itself.<br>Second, c(i+1) cannot be placed on a pile left of c(i), otherwise c(i) would be placed in that pile(According to Patience Sort).<br>Hence, we know that a card c(i+1) must be in some pile to the right of c(i).<br>This means that the length of LIS is at most the minimal number of piles.</p>
+<p><strong>Lemma 2: minimal number of piles &lt;&#x3D; length of LIS</strong><br>Proof: Again, assume we have an LIS: <code>c1 &lt; c2 &lt; ... &lt; cn</code>.<br>Consider a card, c(i). This card must be greater than the top card, c(i-1), on the pile to the left of c(i), otherwise c(i) would be put in that pile. Now consider c(i-1). This card must be greater than the top card on the pile to the left of c(i-1). Hence we can see that there must a card from each pile that forms an Increasing Order (though not necessarily the longest, which is why the minimal number of piles is at most the length of LIS).</p>
+<p><img src="https://i.postimg.cc/5yb4N63C/Screenshot-2023-12-05-155326.jpg" alt="Example Image 4"></p>
+<p>Look at the the image above.<br>Consider the Q of spades. When it is placed on the pile, it must be greater than the top card on the left, which is 8 of spades. Otherwise, if the card is smaller than 8, then it would be put of the same pile as 8 of spades. Hence there’s an Increasing Order, <code>[8, Q]</code><br>Consider the 8 of spades. When it is placed on the pile, it must be greater than the top card on the left, which is 7 of spades. Hence there’s an Increasing Order, <code>[7, 8, Q]</code><br>Consider the 7 of spades. When it is placed on the pile, it must be greater than the top card on the left, which is 5 of spades. Hence there’s an Increasing Order, <code>[5, 7, 8, Q]</code>. Notice that 4 of spades is placed after 7 of spades, so we do not consider it now.<br>… and so on<br>We can see there’s a card from each pile that forms an Increasing Order, <code>[3, 5, 7, 8, Q]</code>.</p>
+<p><strong>Overall: minimal number of piles &#x3D; length of LIS</strong><br>By combining &lt;&#x3D; and &gt;&#x3D;, we know that the minimal number of piles must equal to the length of LIS in order to satisfy both lemmas. Hence minimal number of piles &#x3D; length of LIS.</p>
+<h3 id="2-4-Implementation"><a href="#2-4-Implementation" class="headerlink" title="2.4 Implementation"></a>2.4 Implementation</h3><p>OK, so minimal number of piles &#x3D; length of LIS. What do we do now?<br>We can just mimic the process of Patience Sort to find the length of LIS:</p>
+<ol>
+<li><p>Construct a list, <code>tails</code>. This list will store the top cards in each pile.</p>
+</li>
+<li><p>Loop through each element in the <code>nums</code> list, just like we are dealing each card.</p>
+</li>
+<li><p>For each element x, update the <code>tails</code> list based on the rules below:</p>
+<p> (1) If x is larger than all the elements in tails, append it. This step is like creating a new pile.<br> (2) If <code>tails[i-1]</code> &lt; x &lt;&#x3D; <code>tails[i]</code>, update <code>tails[i]</code> with x. This step is like putting a card on an existing pile.</p>
+<p> <strong>Note that this step is completed using Binary Search</strong>, since we can use Binary Search to loop throught <code>tails</code> and find the appropriate position for element x.</p>
+</li>
+<li><p>The length of the <code>tails</code> list is the number of piles, which is also the length of LIS.</p>
+</li>
+</ol>
+<p>For example, if we have <code>nums = [4,5,6,3]</code>, then the <code>tails</code> list increases like this:</p>
+<pre><code class="py">[4]
+[4, 5]
+[4, 5, 6]
+[3, 5, 6]
+</code></pre>
+<h3 id="2-5-Conclusion"><a href="#2-5-Conclusion" class="headerlink" title="2.5 Conclusion"></a>2.5 Conclusion</h3><p>Overall, we have iterated through <code>nums</code> once, and for every element we have used Binary Search once, so the Big O would be O(nlogn).</p>
+<p>Voila! This is the O(nlogn) solution, with the Python implementation appended below. Thanks for reading this much.</p>
+<h2 id="3-C-Solutions"><a href="#3-C-Solutions" class="headerlink" title="3. C++ Solutions"></a>3. C++ Solutions</h2><h3 id="3-1-Solution-1"><a href="#3-1-Solution-1" class="headerlink" title="3.1 Solution #1"></a>3.1 Solution #1</h3><p>Standard implementation:</p>
+<pre><code class="cpp">class Solution &#123;
+public:
+    int lengthOfLIS(vector&lt;int&gt;&amp; nums) &#123;
+        int i, j, size = 0;
+        int tails[nums.size()];
+
+        for (int x : nums) &#123;
+            i = 0, j = size;
+            // Binary Search
+            while (i != j) &#123;
+                int m = (i + j) / 2;
+                if (tails[m] &lt; x) i = m + 1;
+                else j = m;
+            &#125;
+            // Either update tails[i] with num, or append num
+            tails[i] = x; 
+            // Update the length of LIS
+            size = max(i + 1, size); 
+        &#125;
+
+        return size;
+    &#125;
+&#125;;
+</code></pre>
+<p>Time Complexity: O(nlogn)<br>Space Complexity: O(n)</p>
+<h3 id="3-2-Solution-2"><a href="#3-2-Solution-2" class="headerlink" title="3.2 Solution #2"></a>3.2 Solution #2</h3><p>A shorter piece of code:<br>(Using C++ built-in function <code>lower_bound</code> for Binary Search and the input array itself as the <code>tails</code> list)</p>
+<pre><code class="cpp">class Solution &#123;
+public:
+    int lengthOfLIS(vector&lt;int&gt;&amp; nums) &#123;
+        int size = 0;
+        for(auto num : nums) 
+            if (size == 0 || nums[size - 1] &lt; num) nums[size++] = num;
+            else *lower_bound(nums.begin(), nums.begin() + size, num) = num;
+        return size;
+    &#125;
+&#125;;
+</code></pre>
+<p>Time Complexity: O(nlogn)<br>Space Complexity: O(1)</p>
+<h2 id="4-Bibiliography"><a href="#4-Bibiliography" class="headerlink" title="4. Bibiliography"></a>4. Bibiliography</h2><ul>
+<li><a target="_blank" rel="noopener" href="https://leetcode.com/problems/longest-increasing-subsequence/">https://leetcode.com/problems/longest-increasing-subsequence/</a></li>
+<li><a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Patience_sorting">https://en.wikipedia.org/wiki/Patience_sorting</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.cs.princeton.edu/courses/archive/spring13/cos423/lectures/LongestIncreasingSubsequence.pdf">https://www.cs.princeton.edu/courses/archive/spring13/cos423/lectures/LongestIncreasingSubsequence.pdf
+</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.youtube.com/watch?v=22s1xxRvy28">https://www.youtube.com/watch?v=22s1xxRvy28</a></li>
+</ul>
+
+</div>
+	</div>
+</body>
+
+</html>
