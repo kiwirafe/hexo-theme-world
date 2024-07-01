@@ -5,7 +5,7 @@
                 <p class="post-date">
                     <%= date(post.date, "YYYY-MM-DD" ) %> 
                     <% post.tags.forEach(function(tag){ %>
-                        <a href="<%= tag.href %>">
+                        <a href="<%- url_for_lang(page.lang, tag.path) %>">
                             #<%= tag.name %>
                         </a>
                     <% }) %>

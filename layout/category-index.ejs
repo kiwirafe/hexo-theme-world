@@ -1,7 +1,7 @@
 <div>
 	<div class="categories-wrap">
 		<% get_categories().forEach(function(category){ %>
-			<a href="<%= url_for_lang(page.lang, category.path) %>" class="btn" role="button">
+			<a href="<%- url_for_lang(page.lang, category.path) %>" class="btn" role="button">
 				<%= category.name %>
 			</a>
 		<% }) %>
