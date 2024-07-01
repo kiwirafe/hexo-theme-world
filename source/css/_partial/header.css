@@ -1,17 +1,17 @@
-.nav {
+.head-nav {
 	overflow: hidden;
 	background-color: #f8f9fa;
 	border-bottom: 1px solid #ececec;
 }
 
-.inner {
+.head-nav .inner {
 	min-width: 200px;
 	max-width: 980px;
 	margin: 0 auto;
 	padding: 0px 100px;
 }
 
-.nav a {
+.head-nav a {
 	float: left;
 	color: #555555;
 	text-align: center;
@@ -20,11 +20,11 @@
 	font-size: 17px;
 }
 
-.nav a:hover {
+.head-nav a:hover {
 	color: #a7a7a7;
 }
 
-.nav .right {
+.head-nav .right {
 	float: right;
 }
 
@@ -33,7 +33,7 @@
 		padding: 0px 20px;
 	}
 
-	.nav a {
+	.head-nav a {
 		padding: 14px 8px;
 	}
 }

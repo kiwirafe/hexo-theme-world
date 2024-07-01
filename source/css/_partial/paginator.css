@@ -5,7 +5,7 @@
   text-align: center;
 }
 
-.page-nav a 
+.page-nav a,
 .page-nav span {
   display: inline-block;
   padding: 6px 12px;

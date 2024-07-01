@@ -1,9 +1,8 @@
 # hexo-theme-world
 
-#### [中文文档](README_zh.md) 
-#### Demo : https://kiwirafe.github.io/hexo-theme-world
+### 一个为i18n（双语言）量身定做的 Hexo 主题
 
-A theme devoted to i18n for [Hexo](https://hexo.io/)
+#### Demo : https://kiwirafe.github.io/hexo-theme-world
 
 ## 安装
 在网站的根目录下运行：

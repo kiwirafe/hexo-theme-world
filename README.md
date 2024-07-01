@@ -1,9 +1,8 @@
 # hexo-theme-world
 
-#### [中文文档](README_zh.md) 
-#### Demo : https://kiwirafe.github.io/hexo-theme-world
+### A Hexo theme devoted to i18n (multilingual support).
 
-A theme devoted to i18n for [Hexo](https://hexo.io/)
+#### [中文文档](README_zh.md)  |  [Online Demo](https://kiwirafe.github.io/hexo-theme-world)
 
 ## Installation
 In the root directory of your site:
@@ -19,7 +18,7 @@ Change the theme to world in _config.yml:
 theme: world
 ```
 
-and turn off syntax highlighter (the theme uses customized CDN instead ):
+and turn off syntax highlighter (the theme uses customized CDN instead):
 ```yml
 syntax_highlighter: 
 ```
