@@ -2,6 +2,9 @@
 	<% if (page.category) { %>
 		<h2>Category: <%= page.category %></h2>
 	<% } %>
+	<% if (page.tag) { %>
+		<h2>Tag: <%= page.tag %></h2>
+	<% } %>
 	<ul>
 		<% page.posts.forEach(function(post) { %>
 			<li>

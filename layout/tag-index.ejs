@@ -1,0 +1,30 @@
+<div>
+	<div class="tags-wrap">
+		<% get_tags().forEach(function(tag){ %>
+			<a href="<%- url_for_lang(page.lang, tag.path) %>" class="btn" role="button">
+				<%= tag.name %>
+			</a>
+		<% }) %>
+	</div>
+	
+	<% get_tags().forEach(function(tag){ %>
+		<div class="posts-wrap" id="<%= tag.name %>">
+			<h3 class="archive-tag">
+				<%= tag.name %>
+			</h3>
+			<ul>
+				<% tag.posts.forEach(function(post){ %>
+					<% if (post.lang == page.lang) { %>
+					<li>
+						<a class="post-title" href="<%- url_for(post.path) %>">
+							<%= post.title %>
+						</a>
+					</li>
+					<% } %>
+				<% }) %>
+			</ul>
+		</div>
+	<% }) %>
+</div>
+
+<%- partial('_partial/paginator') %>

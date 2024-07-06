@@ -7,7 +7,7 @@
 		<% }) %>
 	</div>
 	
-	<% page.posts.forEach(function(category){ %>
+	<% get_categories().forEach(function(category){ %>
 		<div class="posts-wrap" id="<%= category.name %>">
 			<h3 class="archive-tag">
 				<%= category.name %>
