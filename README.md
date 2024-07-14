@@ -37,13 +37,14 @@ sources/
     post3.md
     post4.md
 ```
-2. Add the following to _config.yml:
+
+2. Copy the content from `theme/world/_config.world.yml` into your main `_config.yml` file. This action will only modify a few lines to enable i18n support.
+
+3. At the right end of your `_config.yml` file, change the language settings if needed:
 ```yml
 generator_plus:
   language: ['first language', 'second language']
 ```
-3. Change `new_post_name` variable in _config.yml to `new_post_name: :lang/:title.md`
-4. Change `permalink` variable in _config.yml `permalink: :lang/{what was here before}`
 
 ### Front-Matter
 This theme supports categories and tags. All you have to do is add the following to front-matter:

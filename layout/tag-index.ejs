@@ -7,7 +7,7 @@
 		<% }) %>
 	</div>
 	
-	<% get_tags().forEach(function(tag){ %>
+	<% page.posts.forEach(function(tag){ %>
 		<div class="posts-wrap" id="<%= tag.name %>">
 			<h3 class="archive-tag">
 				<%= tag.name %>

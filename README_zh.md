@@ -37,13 +37,14 @@ sources/
     post3.md
     post4.md
 ```
-2. 在 _config.yml 中添加以下内容：
-```yaml
+
+2. 将 `theme/world/_config.world.yml` 文件中的内容复制到主配置文件 `_config.yml` 中。这部操作只会修改一小部分内容以支持 i18n（国际化）。
+
+3. 在 `_config.yml` 文件的末尾，根据你的需求更改language部分：
+```yml
 generator_plus:
   language: ['first language', 'second language']
 ```
-3. 将 _config.yml 中的 `new_post_name` 变量更改为 `new_post_name: :lang/:title.md`
-4. 将 _config.yml 中的 `permalink` 变量更改为 `permalink: :lang/{这里原来的内容}`
 
 ### Front-Matter
 这个主题支持分类和标签。你只需在 Front-Matter 中添加以下内容：
